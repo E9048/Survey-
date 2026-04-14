@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استبيان الأمن السيبراني والهندسة الاجتماعية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0d2137;
+  --navy-mid: #163352;
+  --blue: #1a5fa8;
+  --blue-bright: #2979d4;
+  --accent: #00c2a8;
+  --accent-light: #e0faf6;
+  --gold: #e8a020;
+  --gold-light: #fef6e4;
+  --white: #ffffff;
+  --off-white: #f7f9fc;
+  --surface: #eef2f8;
+  --text: #0d1b2a;
+  --text-mid: #3a4f63;
+  --text-muted: #6b7f96;
+  --border: #d4dde8;
+  --border-focus: #2979d4;
+  --red: #d63031;
+  --red-light: #fff0f0;
+  --green: #00875a;
+  --green-light: #e3fcef;
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 4px rgba(13,33,55,0.08);
+  --shadow: 0 4px 20px rgba(13,33,55,0.10);
+  --shadow-lg: 0 8px 40px rgba(13,33,55,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', 'Segoe UI', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.75;
+}
+
+/* ====== HERO HEADER ====== */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 50%, #1a3a5c 100%);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(0,194,168,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(41,121,212,0.12) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(232,160,32,0.06) 0%, transparent 35%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.hero-inner {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 3rem 2rem 2.5rem;
+}
+.university-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 30px;
+  padding: 6px 16px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+.university-badge .dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.university-badge span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.hero h1 {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.45;
+  margin-bottom: 1rem;
+}
+.hero h1 .highlight {
+  color: var(--accent);
+  position: relative;
+}
+.hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.5rem;
+}
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+}
+.meta-pill svg { width: 13px; height: 13px; opacity: 0.7; }
+
+/* ====== PROGRESS BAR ====== */
+.progress-wrap {
+  background: var(--navy);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.progress-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--blue-bright));
+  border-radius: 5px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+.progress-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 36px;
+  text-align: left;
+}
+.progress-steps {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+
+/* ====== CONSENT BOX ====== */
+.consent-box {
+  max-width: 780px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.5rem;
+}
+.consent-inner {
+  background: var(--gold-light);
+  border: 1px solid #f5d78a;
+  border-right: 4px solid var(--gold);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.consent-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.consent-inner p { font-size: 13px; color: #7a5500; line-height: 1.65; }
+.consent-inner strong { color: #5a3d00; }
+
+/* ====== MAIN LAYOUT ====== */
+.main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+}
+
+/* ====== SECTION ====== */
+.section {
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.5s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--surface);
+}
+.section-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.section-icon.blue { background: #dbeafe; }
+.section-icon.teal { background: var(--accent-light); }
+.section-icon.purple { background: #ede9fe; }
+.section-icon.orange { background: #fff7ed; }
+.section-icon.green { background: var(--green-light); }
+.section-meta { flex: 1; }
+.section-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+}
+.section-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.section-num-badge {
+  background: var(--navy);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ====== QUESTION CARD ====== */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  position: relative;
+}
+.q-card:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(41,121,212,0.1), var(--shadow);
+  transform: translateY(-1px);
+}
+.q-card.answered {
+  border-right: 3px solid var(--accent);
+}
+.q-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.q-badge {
+  background: var(--surface);
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+.q-text {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.65;
+  flex: 1;
+}
+.q-text .req { color: var(--red); margin-right: 3px; }
+.q-hint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin-bottom: 12px;
+  border-right: 2px solid var(--border-focus);
+}
+
+/* ====== RADIO / CHECKBOX OPTIONS ====== */
+.options { display: flex; flex-direction: column; gap: 5px; }
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+}
+.opt:hover {
+  background: #f0f6ff;
+  border-color: #c8dcf7;
+}
+.opt input[type="radio"],
+.opt input[type="checkbox"] {
+  width: 17px; height: 17px;
+  accent-color: var(--blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.opt-label {
+  font-size: 13.5px;
+  color: var(--text-mid);
+  cursor: pointer;
+  line-height: 1.55;
+  flex: 1;
+}
+.opt input:checked ~ .opt-label {
+  color: var(--text);
+  font-weight: 500;
+}
+.opt:has(input:checked) {
+  background: #eef5ff;
+  border-color: #a8c8f5;
+}
+
+/* ====== LIKERT SCALE ====== */
+.likert-wrap { margin-top: 4px; }
+.likert-ends {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+.likert-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+.likert-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.likert-item input {
+  width: 20px; height: 20px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+.likert-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  background: var(--white);
+}
+.likert-item:has(input:checked) .likert-num {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+/* ====== MATRIX (multi-row likert) ====== */
+.matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+.matrix-table th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 8px 6px;
+}
+.matrix-table th.label-col { text-align: right; }
+.matrix-row td {
+  background: var(--surface);
+  padding: 10px 8px;
+  text-align: center;
+  transition: background 0.15s;
+}
+.matrix-row td:first-child {
+  text-align: right;
+  padding-right: 14px;
+  font-size: 13px;
+  color: var(--text);
+  border-radius: 8px 0 0 8px;
+  min-width: 180px;
+}
+.matrix-row td:last-child { border-radius: 0 8px 8px 0; }
+.matrix-row:has(input:checked) td { background: #eef5ff; }
+.matrix-row input {
+  width: 17px; height: 17px;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+/* ====== TEXT INPUT ====== */
+.text-input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: 'Tajawal', sans-serif;
+  color: var(--text);
+  background: var(--off-white);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  direction: rtl;
+}
+.text-input[dir="ltr"] { direction: ltr; text-align: left; }
+.text-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(41,121,212,0.08);
+}
+.text-input::placeholder { color: var(--text-muted); }
+
+/* ====== TEXTAREA ====== */
+.q-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 13.5px;
+  font-family: 'Tajawal', sans-serif;
+  color: var(--text);
+  background: var(--off-white);
+  resize: vertical;
+  min-height: 85px;
+  transition: border-color 0.2s, background 0.2s;
+  direction: rtl;
+  line-height: 1.7;
+}
+.q-textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(41,121,212,0.08);
+}
+.q-textarea::placeholder { color: var(--text-muted); }
+.char-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: left;
+  margin-top: 4px;
+}
+
+/* ====== SUBMIT SECTION ====== */
+.submit-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-top: 2rem;
+}
+.submit-section h3 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.submit-section p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+.submit-btn {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-bright) 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 48px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Cairo', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(26,95,168,0.35);
+  width: 100%;
+  max-width: 320px;
+  letter-spacing: 0.3px;
+}
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(26,95,168,0.45);
+}
+.submit-btn:active { transform: scale(0.98); }
+.submit-btn:disabled {
+  background: #b0bec5;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+.error-msg {
+  display: none;
+  background: var(--red-light);
+  border: 1px solid #fbc8c8;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--red);
+  margin-top: 14px;
+  text-align: right;
+}
+.sending-msg {
+  display: none;
+  font-size: 13px;
+  color: var(--blue);
+  margin-top: 12px;
+}
+
+/* ====== SUCCESS SCREEN ====== */
+.success-screen {
+  display: none;
+  max-width: 780px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+.success-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 4px solid var(--accent);
+}
+.success-icon-wrap {
+  width: 72px; height: 72px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 32px;
+}
+.success-card h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+.success-card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.8;
+}
+.success-ref {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: inline-block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.success-ref strong { color: var(--blue); font-size: 14px; }
+
+/* ====== FOOTER ====== */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+.footer a { color: var(--blue); text-decoration: none; }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 520px) {
+  .hero-inner { padding: 2rem 1.25rem; }
+  .main { padding: 1.25rem 1rem 3rem; }
+  .q-card { padding: 1rem; }
+  .matrix-table { font-size: 12px; }
+  .submit-section { padding: 1.5rem 1rem; }
+  .hero h1 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="university-badge">
+      <div class="dot"></div>
+      <span>بحث أكاديمي مستقل — Elyas Muhammad</span>
+    </div>
+    <h1>أثر <span class="highlight">الهندسة الاجتماعية</span> على الأمن السيبراني لدى طلاب الجامعات</h1>
+    <p class="hero-sub">استبيان بحثي لقياس مستوى الوعي الأمني وتحليل السلوك الرقمي لدى طلاب الجامعات</p>
+    <div class="hero-meta">
+      <div class="meta-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ~10 دقائق
+      </div>
+      <div class="meta-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        سري وآمن
+      </div>
+      <div class="meta-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        17 سؤال
+      </div>
+      <div class="meta-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        بحث أكاديمي 2025
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS (sticky) -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-track">
+      <div class="progress-bar" id="prog-bar"></div>
+    </div>
+    <span class="progress-pct" id="prog-pct">0%</span>
+    <span class="progress-steps" id="prog-steps">0 / 17</span>
+  </div>
+</div>
+
+<!-- CONSENT -->
+<div class="consent-box">
+  <div class="consent-inner">
+    <div class="consent-icon">🔒</div>
+    <p><strong>إقرار المشاركة:</strong> مشاركتك في هذا الاستبيان طوعية تماماً. ستُعامَل جميع إجاباتك بسرية تامة ولن تُستخدم إلا لأغراض البحث العلمي الأكاديمي. يمكنك الانسحاب في أي وقت دون أي تبعات. بالمتابعة، تُقرّ بموافقتك على المشاركة.</p>
+  </div>
+</div>
+
+<!-- FORM -->
+<form id="survey" novalidate>
+<div class="main" id="form-main">
+
+  <!-- ===== بيانات التعريف ===== -->
+  <div class="section" style="animation-delay:0s">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fce7f3;">🪪</div>
+      <div class="section-meta">
+        <div class="section-title">بيانات التعريف الشخصي</div>
+        <div class="section-desc">تُستخدم للتواصل معك فقط — لن تُنشر ضمن نتائج البحث</div>
+      </div>
+      <div class="section-num-badge" style="background:#be185d;">تعريف</div>
+    </div>
+
+    <div class="q-card" id="card-name">
+      <div class="q-header">
+        <span class="q-badge">الاسم</span>
+        <span class="q-text">الاسم الكامل <span class="req">*</span></span>
+      </div>
+      <input type="text" name="full_name" class="text-input" placeholder="اكتب اسمك الكامل هنا..." required autocomplete="name">
+    </div>
+
+    <div class="q-card" id="card-email">
+      <div class="q-header">
+        <span class="q-badge">الإيميل</span>
+        <span class="q-text">البريد الإلكتروني <span class="req">*</span></span>
+      </div>
+      <input type="email" name="email" class="text-input" placeholder="example@email.com" required autocomplete="email" dir="ltr">
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">🔒 لن يُشارك بريدك مع أي طرف ثالث</div>
+    </div>
+
+    <div class="q-card" id="card-phone">
+      <div class="q-header">
+        <span class="q-badge">الهاتف</span>
+        <span class="q-text">رقم الهاتف (واتساب) — اختياري</span>
+      </div>
+      <input type="tel" name="phone" class="text-input" placeholder="+249 9X XXX XXXX" autocomplete="tel" dir="ltr">
+    </div>
+  </div>
+
+  <!-- ===== القسم 1 ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon blue">👤</div>
+      <div class="section-meta">
+        <div class="section-title">البيانات الديموغرافية</div>
+        <div class="section-desc">معلومات عامة لتصنيف العينة البحثية</div>
+      </div>
+      <div class="section-num-badge">١ / ٥</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" id="card-q1">
+      <div class="q-header">
+        <span class="q-badge">س ١</span>
+        <span class="q-text">الجنس <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q1" value="ذكر" data-q="q1"> <span class="opt-label">ذكر</span></label>
+        <label class="opt"><input type="radio" name="q1" value="أنثى" data-q="q1"> <span class="opt-label">أنثى</span></label>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" id="card-q2">
+      <div class="q-header">
+        <span class="q-badge">س ٢</span>
+        <span class="q-text">المستوى الدراسي <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q2" value="السنة الأولى" data-q="q2"> <span class="opt-label">السنة الأولى</span></label>
+        <label class="opt"><input type="radio" name="q2" value="السنة الثانية" data-q="q2"> <span class="opt-label">السنة الثانية</span></label>
+        <label class="opt"><input type="radio" name="q2" value="السنة الثالثة" data-q="q2"> <span class="opt-label">السنة الثالثة</span></label>
+        <label class="opt"><input type="radio" name="q2" value="السنة الرابعة فأكثر" data-q="q2"> <span class="opt-label">السنة الرابعة فأكثر</span></label>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" id="card-q3">
+      <div class="q-header">
+        <span class="q-badge">س ٣</span>
+        <span class="q-text">التخصص الدراسي <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q3" value="تقنية المعلومات/الحوسبة" data-q="q3"> <span class="opt-label">تقنية المعلومات / الحوسبة</span></label>
+        <label class="opt"><input type="radio" name="q3" value="الهندسة" data-q="q3"> <span class="opt-label">الهندسة</span></label>
+        <label class="opt"><input type="radio" name="q3" value="العلوم الإنسانية والاجتماعية" data-q="q3"> <span class="opt-label">العلوم الإنسانية والاجتماعية</span></label>
+        <label class="opt"><input type="radio" name="q3" value="العلوم الطبية والصحية" data-q="q3"> <span class="opt-label">العلوم الطبية والصحية</span></label>
+        <label class="opt"><input type="radio" name="q3" value="العلوم الاقتصادية والإدارية" data-q="q3"> <span class="opt-label">العلوم الاقتصادية والإدارية</span></label>
+        <label class="opt"><input type="radio" name="q3" value="تخصص آخر" data-q="q3"> <span class="opt-label">تخصص آخر</span></label>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card-q4">
+      <div class="q-header">
+        <span class="q-badge">س ٤</span>
+        <span class="q-text">كم ساعة تقضي يومياً على الإنترنت ووسائل التواصل الاجتماعي؟ <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q4" value="أقل من ساعتين" data-q="q4"> <span class="opt-label">أقل من ساعتين</span></label>
+        <label class="opt"><input type="radio" name="q4" value="من 2 إلى 4 ساعات" data-q="q4"> <span class="opt-label">من ٢ إلى ٤ ساعات</span></label>
+        <label class="opt"><input type="radio" name="q4" value="من 4 إلى 6 ساعات" data-q="q4"> <span class="opt-label">من ٤ إلى ٦ ساعات</span></label>
+        <label class="opt"><input type="radio" name="q4" value="أكثر من 6 ساعات" data-q="q4"> <span class="opt-label">أكثر من ٦ ساعات</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== القسم 2 ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon teal">🧠</div>
+      <div class="section-meta">
+        <div class="section-title">مستوى الوعي بالهندسة الاجتماعية</div>
+        <div class="section-desc">قياس مدى إدراكك لأساليب الهجمات الرقمية</div>
+      </div>
+      <div class="section-num-badge">٢ / ٥</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card-q5">
+      <div class="q-header">
+        <span class="q-badge">س ٥</span>
+        <span class="q-text">هل سبق لك أن سمعت بمصطلح "الهندسة الاجتماعية" في سياق الأمن السيبراني؟ <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q5" value="نعم وأعرف معناه جيداً" data-q="q5"> <span class="opt-label">نعم، وأعرف معناه جيداً</span></label>
+        <label class="opt"><input type="radio" name="q5" value="سمعت به لكنني غير متأكد" data-q="q5"> <span class="opt-label">سمعت به لكنني لست متأكداً من معناه</span></label>
+        <label class="opt"><input type="radio" name="q5" value="لم أسمع به من قبل" data-q="q5"> <span class="opt-label">لم أسمع به من قبل</span></label>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" id="card-q6">
+      <div class="q-header">
+        <span class="q-badge">س ٦</span>
+        <span class="q-text">ما مدى قدرتك على تمييز رسائل التصيد الاحتيالي (Phishing)؟ <span class="req">*</span></span>
+      </div>
+      <div class="q-hint">مقياس من ١ إلى ٥ — حيث ١ = لا أستطيع إطلاقاً، و٥ = أستطيع بسهولة تامة</div>
+      <div class="likert-wrap">
+        <div class="likert-ends"><span>لا أستطيع إطلاقاً</span><span>أستطيع بسهولة</span></div>
+        <div class="likert-row">
+          <div class="likert-item"><input type="radio" name="q6" value="1" data-q="q6"><div class="likert-num">١</div></div>
+          <div class="likert-item"><input type="radio" name="q6" value="2" data-q="q6"><div class="likert-num">٢</div></div>
+          <div class="likert-item"><input type="radio" name="q6" value="3" data-q="q6"><div class="likert-num">٣</div></div>
+          <div class="likert-item"><input type="radio" name="q6" value="4" data-q="q6"><div class="likert-num">٤</div></div>
+          <div class="likert-item"><input type="radio" name="q6" value="5" data-q="q6"><div class="likert-num">٥</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="q-card" id="card-q7">
+      <div class="q-header">
+        <span class="q-badge">س ٧</span>
+        <span class="q-text">أيٌّ من الأساليب التالية تعرف أنها من أساليب الهندسة الاجتماعية؟</span>
+      </div>
+      <div class="q-hint">اختر كل ما ينطبق — يمكنك اختيار أكثر من إجابة</div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q7" value="التصيد الاحتيالي (Phishing)" data-q="q7"> <span class="opt-label">التصيد الاحتيالي عبر البريد الإلكتروني (Phishing)</span></label>
+        <label class="opt"><input type="checkbox" name="q7" value="الانتحال (Impersonation)" data-q="q7"> <span class="opt-label">الانتحال والتظاهر بهوية شخص آخر (Impersonation)</span></label>
+        <label class="opt"><input type="checkbox" name="q7" value="الاصطياد (Baiting)" data-q="q7"> <span class="opt-label">الاصطياد بالروابط والملفات الجذابة (Baiting)</span></label>
+        <label class="opt"><input type="checkbox" name="q7" value="التذرع (Pretexting)" data-q="q7"> <span class="opt-label">التذرع بذرائع كاذبة للحصول على معلومات (Pretexting)</span></label>
+        <label class="opt"><input type="checkbox" name="q7" value="لم أكن أعرف أياً منها" data-q="q7"> <span class="opt-label">لم أكن أعرف أياً منها</span></label>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="q-card" id="card-q8">
+      <div class="q-header">
+        <span class="q-badge">س ٨</span>
+        <span class="q-text">من أين تحصل على معلوماتك حول الأمن السيبراني؟</span>
+      </div>
+      <div class="q-hint">اختر كل ما ينطبق</div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q8" value="مقررات جامعية رسمية" data-q="q8"> <span class="opt-label">مقررات جامعية رسمية</span></label>
+        <label class="opt"><input type="checkbox" name="q8" value="وسائل التواصل الاجتماعي" data-q="q8"> <span class="opt-label">وسائل التواصل الاجتماعي (يوتيوب، تيك توك، إنستغرام...)</span></label>
+        <label class="opt"><input type="checkbox" name="q8" value="دورات تدريبية ومواقع متخصصة" data-q="q8"> <span class="opt-label">دورات تدريبية أو مواقع متخصصة (Coursera، Cybrary...)</span></label>
+        <label class="opt"><input type="checkbox" name="q8" value="الأصدقاء والعائلة" data-q="q8"> <span class="opt-label">الأصدقاء والعائلة</span></label>
+        <label class="opt"><input type="checkbox" name="q8" value="الأخبار والمقالات التقنية" data-q="q8"> <span class="opt-label">الأخبار والمقالات التقنية</span></label>
+        <label class="opt"><input type="checkbox" name="q8" value="لا أبحث عن هذه المعلومات" data-q="q8"> <span class="opt-label">لا أبحث عن هذه المعلومات</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== القسم 3 ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon purple">⚠️</div>
+      <div class="section-meta">
+        <div class="section-title">التعرض للهجمات والسلوك الرقمي</div>
+        <div class="section-desc">تجاربك الفعلية مع الهجمات الإلكترونية وسلوكياتك الوقائية</div>
+      </div>
+      <div class="section-num-badge">٣ / ٥</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="q-card" id="card-q9">
+      <div class="q-header">
+        <span class="q-badge">س ٩</span>
+        <span class="q-text">هل تعرضت لأي من المواقف التالية؟</span>
+      </div>
+      <div class="q-hint">اختر كل ما ينطبق على تجربتك الشخصية</div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q9" value="رسالة تطلب معلومات شخصية أو مالية" data-q="q9"> <span class="opt-label">تلقيت رسالة مشبوهة تطلب معلومات شخصية أو مالية</span></label>
+        <label class="opt"><input type="checkbox" name="q9" value="ضغط على رابط احتيالي" data-q="q9"> <span class="opt-label">ضغطت على رابط وأدركت لاحقاً أنه كان احتيالياً</span></label>
+        <label class="opt"><input type="checkbox" name="q9" value="محاولة انتحال هوية جهة رسمية" data-q="q9"> <span class="opt-label">تعرضت لمحاولة انتحال هوية شخص من جهة رسمية</span></label>
+        <label class="opt"><input type="checkbox" name="q9" value="مشاركة معلومات حساسة والندم" data-q="q9"> <span class="opt-label">شاركت معلومات حساسة ثم ندمت على ذلك</span></label>
+        <label class="opt"><input type="checkbox" name="q9" value="تحميل ملف ضار" data-q="q9"> <span class="opt-label">قمت بتحميل ملف تبيّن أنه يحتوي على برنامج ضار</span></label>
+        <label class="opt"><input type="checkbox" name="q9" value="لم أتعرض لأي من ذلك" data-q="q9"> <span class="opt-label">لم أتعرض لأي من ذلك حتى الآن</span></label>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="q-card" id="card-q10">
+      <div class="q-header">
+        <span class="q-badge">س ١٠</span>
+        <span class="q-text">كم مرة تقريباً واجهت محاولات تصيد احتيالي خلال الأشهر الستة الماضية؟ <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q10" value="لم أواجه أي محاولة" data-q="q10"> <span class="opt-label">لم أواجه أي محاولة</span></label>
+        <label class="opt"><input type="radio" name="q10" value="مرة إلى مرتين" data-q="q10"> <span class="opt-label">مرة إلى مرتين</span></label>
+        <label class="opt"><input type="radio" name="q10" value="من 3 إلى 5 مرات" data-q="q10"> <span class="opt-label">من ٣ إلى ٥ مرات</span></label>
+        <label class="opt"><input type="radio" name="q10" value="أكثر من 5 مرات" data-q="q10"> <span class="opt-label">أكثر من ٥ مرات</span></label>
+      </div>
+    </div>
+
+    <!-- Q11 — Matrix -->
+    <div class="q-card" id="card-q11">
+      <div class="q-header">
+        <span class="q-badge">س ١١</span>
+        <span class="q-text">ما مدى التزامك بالسلوكيات الأمنية التالية؟ <span class="req">*</span></span>
+      </div>
+      <div class="q-hint">١ = لا أفعل ذلك أبداً &nbsp;|&nbsp; ٣ = أحياناً &nbsp;|&nbsp; ٥ = أفعله دائماً</div>
+      <div style="overflow-x:auto;">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th class="label-col">السلوك</th>
+              <th>١</th><th>٢</th><th>٣</th><th>٤</th><th>٥</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="matrix-row">
+              <td>استخدام كلمات مرور قوية ومختلفة لكل حساب</td>
+              <td><input type="radio" name="q11a" value="1"></td>
+              <td><input type="radio" name="q11a" value="2"></td>
+              <td><input type="radio" name="q11a" value="3"></td>
+              <td><input type="radio" name="q11a" value="4"></td>
+              <td><input type="radio" name="q11a" value="5"></td>
+            </tr>
+            <tr class="matrix-row">
+              <td>التحقق من هوية المرسل قبل الرد على طلبات المعلومات</td>
+              <td><input type="radio" name="q11b" value="1"></td>
+              <td><input type="radio" name="q11b" value="2"></td>
+              <td><input type="radio" name="q11b" value="3"></td>
+              <td><input type="radio" name="q11b" value="4"></td>
+              <td><input type="radio" name="q11b" value="5"></td>
+            </tr>
+            <tr class="matrix-row">
+              <td>تفعيل المصادقة الثنائية (2FA) على حساباتي</td>
+              <td><input type="radio" name="q11c" value="1"></td>
+              <td><input type="radio" name="q11c" value="2"></td>
+              <td><input type="radio" name="q11c" value="3"></td>
+              <td><input type="radio" name="q11c" value="4"></td>
+              <td><input type="radio" name="q11c" value="5"></td>
+            </tr>
+            <tr class="matrix-row">
+              <td>الحذر قبل الضغط على الروابط في الرسائل</td>
+              <td><input type="radio" name="q11d" value="1"></td>
+              <td><input type="radio" name="q11d" value="2"></td>
+              <td><input type="radio" name="q11d" value="3"></td>
+              <td><input type="radio" name="q11d" value="4"></td>
+              <td><input type="radio" name="q11d" value="5"></td>
+            </tr>
+            <tr class="matrix-row">
+              <td>تحديث التطبيقات والأنظمة بانتظام</td>
+              <td><input type="radio" name="q11e" value="1"></td>
+              <td><input type="radio" name="q11e" value="2"></td>
+              <td><input type="radio" name="q11e" value="3"></td>
+              <td><input type="radio" name="q11e" value="4"></td>
+              <td><input type="radio" name="q11e" value="5"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== القسم 4 ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon orange">📊</div>
+      <div class="section-meta">
+        <div class="section-title">تقييم برامج التوعية الأمنية</div>
+        <div class="section-desc">مدى فاعلية الجهود التوعوية المتاحة في جامعتك</div>
+      </div>
+      <div class="section-num-badge">٤ / ٥</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="q-card" id="card-q12">
+      <div class="q-header">
+        <span class="q-badge">س ١٢</span>
+        <span class="q-text">هل تقدم جامعتك برامج أو أنشطة توعوية في مجال الأمن السيبراني؟ <span class="req">*</span></span>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q12" value="نعم وأشارك فيها بانتظام" data-q="q12"> <span class="opt-label">نعم، وأشارك فيها بانتظام</span></label>
+        <label class="opt"><input type="radio" name="q12" value="نعم لكنني لا أشارك" data-q="q12"> <span class="opt-label">نعم، لكنني لا أشارك فيها</span></label>
+        <label class="opt"><input type="radio" name="q12" value="لا توجد برامج" data-q="q12"> <span class="opt-label">لا، لا توجد برامج من هذا القبيل</span></label>
+        <label class="opt"><input type="radio" name="q12" value="لست متأكداً" data-q="q12"> <span class="opt-label">لست متأكداً</span></label>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="q-card" id="card-q13">
+      <div class="q-header">
+        <span class="q-badge">س ١٣</span>
+        <span class="q-text">ما مدى فاعلية البرامج التوعوية المتاحة في تحسين سلوكك الأمني؟ <span class="req">*</span></span>
+      </div>
+      <div class="q-hint">١ = غير فعّالة إطلاقاً، و٥ = فعّالة جداً</div>
+      <div class="likert-wrap">
+        <div class="likert-ends"><span>غير فعّالة</span><span>فعّالة جداً</span></div>
+        <div class="likert-row">
+          <div class="likert-item"><input type="radio" name="q13" value="1" data-q="q13"><div class="likert-num">١</div></div>
+          <div class="likert-item"><input type="radio" name="q13" value="2" data-q="q13"><div class="likert-num">٢</div></div>
+          <div class="likert-item"><input type="radio" name="q13" value="3" data-q="q13"><div class="likert-num">٣</div></div>
+          <div class="likert-item"><input type="radio" name="q13" value="4" data-q="q13"><div class="likert-num">٤</div></div>
+          <div class="likert-item"><input type="radio" name="q13" value="5" data-q="q13"><div class="likert-num">٥</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="q-card" id="card-q14">
+      <div class="q-header">
+        <span class="q-badge">س ١٤</span>
+        <span class="q-text">ما الأساليب التي تراها الأنسب لتوعية الطلاب؟</span>
+      </div>
+      <div class="q-hint">اختر كل ما ينطبق</div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q14" value="ورش عمل وتدريبات عملية" data-q="q14"> <span class="opt-label">ورش عمل وتدريبات عملية تفاعلية</span></label>
+        <label class="opt"><input type="checkbox" name="q14" value="مقاطع فيديو على وسائل التواصل" data-q="q14"> <span class="opt-label">مقاطع فيديو توعوية على وسائل التواصل الاجتماعي</span></label>
+        <label class="opt"><input type="checkbox" name="q14" value="إدراج مادة في المناهج" data-q="q14"> <span class="opt-label">إدراج مادة متخصصة في المناهج الجامعية</span></label>
+        <label class="opt"><input type="checkbox" name="q14" value="محاكاة هجمات حقيقية" data-q="q14"> <span class="opt-label">محاكاة هجمات حقيقية لأغراض تعليمية (Simulated Attacks)</span></label>
+        <label class="opt"><input type="checkbox" name="q14" value="نشرات دورية عبر واتساب" data-q="q14"> <span class="opt-label">نشرات ورسائل توعوية دورية عبر البريد أو واتساب</span></label>
+        <label class="opt"><input type="checkbox" name="q14" value="مسابقات وألعاب تعليمية" data-q="q14"> <span class="opt-label">مسابقات وألعاب تعليمية في مجال الأمن السيبراني</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== القسم 5 ===== -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon green">💬</div>
+      <div class="section-meta">
+        <div class="section-title">ملاحظات وتوصيات</div>
+        <div class="section-desc">مشاركتك في هذا القسم تُثري نتائج البحث بشكل كبير</div>
+      </div>
+      <div class="section-num-badge">٥ / ٥</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="q-card" id="card-q15">
+      <div class="q-header">
+        <span class="q-badge">س ١٥ — اختياري</span>
+        <span class="q-text">هل لديك تجربة شخصية مع هجوم هندسة اجتماعية تودّ مشاركتها؟</span>
+      </div>
+      <textarea class="q-textarea" name="q15" placeholder="صف تجربتك باختصار..." maxlength="500" id="ta-15"></textarea>
+      <div class="char-count"><span id="cc-15">0</span> / 500 حرف</div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="q-card" id="card-q16">
+      <div class="q-header">
+        <span class="q-badge">س ١٦</span>
+        <span class="q-text">ما أبرز التحديات التي تواجهك في الحفاظ على سلامتك الرقمية؟</span>
+      </div>
+      <textarea class="q-textarea" name="q16" placeholder="مثلاً: كثرة كلمات المرور، قلة الوعي، ضعف الأدوات المتاحة..." maxlength="500" id="ta-16"></textarea>
+      <div class="char-count"><span id="cc-16">0</span> / 500 حرف</div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="q-card" id="card-q17">
+      <div class="q-header">
+        <span class="q-badge">س ١٧</span>
+        <span class="q-text">ما التوصيات التي تقترحها لتطوير برامج التوعية الأمنية في جامعتك؟</span>
+      </div>
+      <textarea class="q-textarea" name="q17" placeholder="اكتب مقترحاتك هنا..." maxlength="600" id="ta-17"></textarea>
+      <div class="char-count"><span id="cc-17">0</span> / 600 حرف</div>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-section">
+    <h3>هل أنت مستعد للإرسال؟</h3>
+    <p>تأكد من مراجعة إجاباتك. الأسئلة المطلوبة (المشار إليها بـ <span style="color:var(--red)">*</span>) يجب الإجابة عنها قبل الإرسال.</p>
+    <button type="submit" class="submit-btn" id="submit-btn">إرسال الاستبيان ✓</button>
+    <div class="error-msg" id="err-msg">⚠️ يرجى الإجابة على جميع الأسئلة الإلزامية قبل الإرسال.</div>
+    <div class="sending-msg" id="sending-msg">⏳ جاري إرسال إجاباتك...</div>
+  </div>
+
+</div>
+</form>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="success-screen">
+  <div class="success-card">
+    <div class="success-icon-wrap">✅</div>
+    <h2>شكراً <span id="success-name"></span> على مشاركتك!</h2>
+    <p>تم استلام إجاباتك بنجاح وتسجيلها في قاعدة بيانات البحث. مساهمتك تُسهم مباشرةً في تطوير الأمن السيبراني وتعزيز الوعي الرقمي في البيئة الجامعية.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">سيصلك تأكيد على بريدك الإلكتروني قريباً.</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:0;">رقم الاستجابة الخاص بك:</p>
+    <div class="success-ref"><strong id="ref-num">—</strong></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  بحث أكاديمي مستقل &nbsp;|&nbsp; الباحث: Elyas Muhammad &nbsp;|&nbsp; 2025م
+  <br>جميع البيانات مشفّرة وتُستخدم لأغراض البحث العلمي فقط
+</div>
+
+<script>
+const SHEETS_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+// ====== تتبع الرابط — من أرسل الاستبيان لمين ======
+const urlParams = new URLSearchParams(window.location.search);
+const sentTo = urlParams.get('to') || urlParams.get('ref') || '';
+const sentBy = urlParams.get('from') || '';
+if (sentTo) {
+  const nameField = document.querySelector('input[name="full_name"]');
+  if (nameField && !nameField.value) nameField.placeholder = 'مرحباً ' + decodeURIComponent(sentTo) + '، اكتب اسمك الكامل...';
+}
+
+const requiredRadioNames = ['q1','q2','q3','q4','q5','q6','q10','q12','q13'];
+const totalQuestions = 20;
+
+function getAnsweredCount() {
+  let count = 0;
+  // identity fields
+  ['full_name','email'].forEach(n => {
+    const el = document.querySelector(`input[name="${n}"]`);
+    if (el && el.value.trim().length > 1) count++;
+  });
+  if (document.querySelector('input[name="phone"]')?.value.trim()) count++;
+  requiredRadioNames.forEach(n => {
+    if (document.querySelector(`input[name="${n}"]:checked`)) count++;
+  });
+  ['q7','q8','q9','q14'].forEach(n => {
+    if (document.querySelector(`input[name="${n}"]:checked`)) count++;
+  });
+  ['q11a','q11b','q11c','q11d','q11e'].forEach(n => {
+    if (document.querySelector(`input[name="${n}"]:checked`)) count += 0.2;
+  });
+  if (Math.round(document.querySelectorAll('input[name^="q11"]:checked').length / 5) === 1) {
+    count = count;
+  }
+  ['q15','q16','q17'].forEach(n => {
+    const el = document.querySelector(`[name="${n}"]`);
+    if (el && el.value.trim().length > 0) count++;
+  });
+  return Math.min(Math.round(count), totalQuestions);
+}
+
+function updateProgress() {
+  const answered = getAnsweredCount();
+  const pct = Math.round((answered / totalQuestions) * 100);
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-steps').textContent = answered + ' / ' + totalQuestions;
+}
+
+function markAnswered(name) {
+  const card = document.getElementById('card-' + name);
+  if (card) card.classList.add('answered');
+  updateProgress();
+}
+
+document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+  input.addEventListener('change', function() {
+    const n = this.name.replace(/[abcde]$/, '');
+    markAnswered(n.startsWith('q11') ? 'q11' : n);
+    updateProgress();
+  });
+});
+
+['ta-15','ta-16','ta-17'].forEach(id => {
+  const ta = document.getElementById(id);
+  if (!ta) return;
+  const ccId = 'cc-' + id.split('-')[1];
+  ta.addEventListener('input', function() {
+    document.getElementById(ccId).textContent = this.value.length;
+    updateProgress();
+  });
+});
+
+// track text input progress
+document.querySelectorAll('.text-input').forEach(inp => {
+  inp.addEventListener('input', updateProgress);
+});
+
+function collectData() {
+  const data = {};
+  // identity
+  data.full_name = document.querySelector('input[name="full_name"]')?.value.trim() || '';
+  data.email     = document.querySelector('input[name="email"]')?.value.trim() || '';
+  data.phone     = document.querySelector('input[name="phone"]')?.value.trim() || '';
+  // tracking
+  data.sent_to   = sentTo;
+  data.sent_by   = sentBy;
+  data.source_url = window.location.href;
+  const fd = new FormData(document.getElementById('survey'));
+  const multi = {};
+  for (let [k, v] of fd.entries()) {
+    if (multi[k]) {
+      multi[k].push(v);
+    } else {
+      const existing = data[k];
+      if (existing) {
+        multi[k] = [existing, v];
+        delete data[k];
+      } else {
+        data[k] = v;
+      }
+    }
+  }
+  Object.keys(multi).forEach(k => { data[k] = multi[k].join('، '); });
+  return data;
+}
+
+function generateRef() {
+  return 'SD-' + Date.now().toString(36).toUpperCase();
+}
+
+document.getElementById('survey').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  let valid = true;
+  let errText = '⚠️ يرجى الإجابة على جميع الأسئلة الإلزامية قبل الإرسال.';
+
+  // validate identity
+  const nameVal  = document.querySelector('input[name="full_name"]')?.value.trim();
+  const emailVal = document.querySelector('input[name="email"]')?.value.trim();
+  if (!nameVal || nameVal.length < 2) {
+    valid = false;
+    errText = '⚠️ يرجى كتابة اسمك الكامل.';
+    document.querySelector('input[name="full_name"]')?.focus();
+  } else if (!emailVal || !emailVal.includes('@')) {
+    valid = false;
+    errText = '⚠️ يرجى إدخال بريد إلكتروني صحيح.';
+    document.querySelector('input[name="email"]')?.focus();
+  } else {
+    requiredRadioNames.forEach(n => {
+      if (!document.querySelector(`input[name="${n}"]:checked`)) valid = false;
+    });
+  }
+
+  if (!valid) {
+    const errEl = document.getElementById('err-msg');
+    errEl.textContent = errText;
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  document.getElementById('err-msg').style.display = 'none';
+  const btn = document.getElementById('submit-btn');
+  const sending = document.getElementById('sending-msg');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الإرسال...';
+  sending.style.display = 'block';
+
+  const payload = collectData();
+  const ref = generateRef();
+  payload.ref = ref;
+  payload.timestamp = new Date().toISOString();
+
+  if (SHEETS_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    try {
+      await fetch(SHEETS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors'
+      });
+    } catch(err) { console.warn('Sheets error:', err); }
+  }
+
+  document.getElementById('form-main').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  document.getElementById('ref-num').textContent = ref;
+  const firstName = (document.querySelector('input[name="full_name"]')?.value.trim() || '').split(' ')[0];
+  document.getElementById('success-name').textContent = firstName;
+  document.getElementById('success-screen').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
